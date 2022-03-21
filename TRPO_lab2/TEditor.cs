@@ -152,11 +152,7 @@ namespace TRPO_lab2
         }
 
 
-        public Editor()
-        {
-
-
-        }
+        
 
 
 

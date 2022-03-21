@@ -13,6 +13,8 @@ namespace TRPO_lab2
         //конструктор, принимает вещественное число, систему счисления и точность
         public TPNumber(double n, int b, int c=6)
         {
+            if (b < 2 || b > 16)
+                throw new Exception("Недопустимая система счисления");
             //внутреннее представление числа
             //храним в десятичной системе счисления!
             //Поэтому если число не десятичное - переводим.
@@ -29,6 +31,9 @@ namespace TRPO_lab2
         //конструктор, принимает строковое представление числа
         public TPNumber(string n, int b, int c=6)
         {
+            if (b < 2 || b > 16)
+                throw new Exception("Недопустимая система счисления");
+
             if (b != 10)
                 n = Conver_p_10.dval(n, b).ToString();
             _number = new UPNumber
