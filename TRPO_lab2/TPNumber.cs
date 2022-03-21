@@ -11,7 +11,7 @@ namespace TRPO_lab2
         private UPNumber _number;
 
         //конструктор, принимает вещественное число, систему счисления и точность
-        public TPNumber(double n, int b, int c=6)
+        public TPNumber(double n, int b, int c = 6)
         {
             if (b < 2 || b > 16)
                 throw new Exception("Недопустимая система счисления");
@@ -29,7 +29,7 @@ namespace TRPO_lab2
         }
 
         //конструктор, принимает строковое представление числа
-        public TPNumber(string n, int b, int c=6)
+        public TPNumber(string n, int b, int c = 6)
         {
             if (b < 2 || b > 16)
                 throw new Exception("Недопустимая система счисления");
@@ -50,7 +50,7 @@ namespace TRPO_lab2
         public double GetNumberDoubleDecimal() => _number.N;
 
         //переводим число из 10-й системы, в которой храним, в систему по основанию b
-        public double GetNumberDouble() => _number.B != 10? 
+        public double GetNumberDouble() => _number.B != 10 ?
             double.Parse(Conver_10_p.Do(_number.N, _number.B)) : _number.N;
 
         public string GetNumberString() => _number.B != 10 ?
@@ -64,9 +64,20 @@ namespace TRPO_lab2
 
         public string GetAccuracyString() => _number.C.ToString();
 
-        public void SetBaseNumber(int b) => _number.B = b;
+        public void SetBaseNumber(int b)
+        {
+            if (b < 2 || b > 16)
+                throw new Exception("Недопустимая система счисления");
+            _number.B = b;
+        }
 
-        public void SetBaseString(string b) => _number.B = int.Parse(b);
+        public void SetBaseString(string b) 
+        {
+            int i = int.Parse(b);
+            if (i < 2 || i > 16)
+                throw new Exception("Недопустимая система счисления");
+            _number.B = i; 
+        }
 
         public void SetAccuracyNumber(int c) => _number.C = c;
 
