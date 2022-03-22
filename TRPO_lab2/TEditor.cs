@@ -6,7 +6,7 @@ namespace TRPO_lab2
     {
 
         //Поле для хранения редактируемого числа.
-        private string number = "";
+        private string number = "0";
 
         //Разделитель целой и дробной частей.
         const string delim = ".";
@@ -16,6 +16,12 @@ namespace TRPO_lab2
 
         //
         const string minus = "-";
+        public enum CommandOfEditor
+        {
+            AddDigit, // добавить символ
+            Backspace, // забой символа
+            Clear // отчистка всего редактора
+        }
 
         //Свойствое для редактируемого числа.
         public string Number
@@ -147,7 +153,7 @@ namespace TRPO_lab2
         //Очистить редактируемое число.
         public string Clear()
         {
-            this.number = "";
+            this.number = "0";
             return this.number;
         }
 
