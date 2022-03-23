@@ -145,9 +145,12 @@ namespace TRPO_lab2
         //Удалить символ справа.
         public string Bs()
         {
-            if (this.number.Length == 0)
-                throw new Exception("Нельзя удалить символ у пустого числа");
+            if (this.Number == "0")
+                return "0";
             this.number = this.number.Substring(0, this.number.Length - 1);
+            //если удалили последний символ
+            if (this.number.Length == 0)
+                this.Number="0";
             return this.number;
         }
         //Очистить редактируемое число.
