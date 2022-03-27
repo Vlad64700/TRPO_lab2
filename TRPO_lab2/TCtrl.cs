@@ -123,6 +123,7 @@ namespace TRPO_lab2
                 Proc.SetRightOperand(new TPNumber(Editor.Number, BaseNumber, AccuracyNumber));
                 Proc.DoOperation();
                 Editor.Number = "0";
+                Proc.SetOperation(command);
                 return Proc.GetLeftOperand().GetNumberString(); ;
             }
 
@@ -144,8 +145,10 @@ namespace TRPO_lab2
             var number = new TPNumber(Editor.Number, BaseNumber, AccuracyNumber);
             Proc.SetRightOperand(number);
             //устанавливем операцию
+            var temp_state = Proc.GetState();
             Proc.SetOperation(command);
             Proc.DoFunction();
+            Proc.SetOperation(temp_state);
 
             Editor.Number = Proc.GetRightOperand().GetNumberString();
            
