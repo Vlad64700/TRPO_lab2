@@ -20,12 +20,14 @@ namespace TRPO_lab2
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            control.DoCommandOfCalculator(TCtrl.CommandOfCalculator.MC);
+            button1.Enabled = false;
+            button2.Enabled = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            label2.Text = control.DoCommandOfCalculator(TCtrl.CommandOfCalculator.MR);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -658,6 +660,18 @@ namespace TRPO_lab2
             label2.Text = "0";
 
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            control.DoCommandOfCalculator(TCtrl.CommandOfCalculator.MS);
+            button1.Enabled = true;
+            button2.Enabled = true;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            control.DoCommandOfCalculator(TCtrl.CommandOfCalculator.M_Plus);
         }
     }
 }

@@ -58,18 +58,23 @@ namespace TRPO_lab2
             Editor.OnlyInteger = onlyInteger;
         }
 
-        public void DoCommandOfCalculator(CommandOfCalculator command) 
+        public string DoCommandOfCalculator(CommandOfCalculator command) 
         {
             isLastClickOperation = false;
             switch (command) 
             {
                 case CommandOfCalculator.MC:
+                    Memory.Clear();
                     break;
                 case CommandOfCalculator.MR:
+                    var num = Memory.Take();
+                    Editor.Number = num.GetNumberString();
                     break;
                 case CommandOfCalculator.MS:
+                    Memory.Write(new TPNumber(Editor.Number, BaseNumber));
                     break;
                 case CommandOfCalculator.M_Plus:
+                    Memory.Add(new TPNumber(Editor.Number, BaseNumber));
                     break;
                 case CommandOfCalculator.BS:
                     DoCommandOfEditor(TEditor.CommandOfEditor.Backspace);
@@ -81,12 +86,11 @@ namespace TRPO_lab2
                     SetStartStateOfCalculator();
                     break;
             }
+            return Editor.Number;
         }
 
         public string DoCommandOfEditor (TEditor.CommandOfEditor command, char ch='0')
-        {
-
-            isLastClickOperation = false;
+        { 
             switch (command)
             {
                 case TEditor.CommandOfEditor.AddDigit:
@@ -96,7 +100,7 @@ namespace TRPO_lab2
                     isLastClickEnter = false;
                     break;
                 case TEditor.CommandOfEditor.Backspace:
-                    if (isLastClickEnter == false)
+                    if (isLastClickEnter == false && isLastClickOperation == false)
                         Editor.Bs();
                     break;
                 case TEditor.CommandOfEditor.Clear:
@@ -104,6 +108,7 @@ namespace TRPO_lab2
                     Editor.Clear();
                     break;
             }
+            isLastClickOperation = false;
 
             return Editor.Number;
         }

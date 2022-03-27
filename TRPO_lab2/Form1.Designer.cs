@@ -139,7 +139,7 @@
             this.целыеЧислаToolStripMenuItem,
             this.вещественныеЧислаToolStripMenuItem});
             this.режимToolStripMenuItem.Name = "режимToolStripMenuItem";
-            this.режимToolStripMenuItem.Size = new System.Drawing.Size(359, 44);
+            this.режимToolStripMenuItem.Size = new System.Drawing.Size(229, 44);
             this.режимToolStripMenuItem.Text = "Режим ";
             // 
             // целыеЧислаToolStripMenuItem
@@ -185,6 +185,7 @@
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(12, 383);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(89, 77);
@@ -195,6 +196,7 @@
             // 
             // button2
             // 
+            this.button2.Enabled = false;
             this.button2.Location = new System.Drawing.Point(12, 466);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(89, 77);
@@ -211,6 +213,7 @@
             this.button3.TabIndex = 4;
             this.button3.Text = "MS";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -220,6 +223,7 @@
             this.button4.TabIndex = 5;
             this.button4.Text = "M+";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
@@ -456,15 +460,15 @@
             this.button24.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.button24.Location = new System.Drawing.Point(12, 300);
             this.button24.Name = "button24";
-            this.button24.Size = new System.Drawing.Size(89, 77);
+            this.button24.Size = new System.Drawing.Size(279, 77);
             this.button24.TabIndex = 26;
             this.button24.UseVisualStyleBackColor = false;
             // 
             // button25
             // 
-            this.button25.Location = new System.Drawing.Point(202, 300);
+            this.button25.Location = new System.Drawing.Point(487, 300);
             this.button25.Name = "button25";
-            this.button25.Size = new System.Drawing.Size(181, 77);
+            this.button25.Size = new System.Drawing.Size(86, 77);
             this.button25.TabIndex = 27;
             this.button25.Text = "BS";
             this.button25.UseVisualStyleBackColor = true;
@@ -472,9 +476,9 @@
             // 
             // button26
             // 
-            this.button26.Location = new System.Drawing.Point(392, 300);
+            this.button26.Location = new System.Drawing.Point(582, 300);
             this.button26.Name = "button26";
-            this.button26.Size = new System.Drawing.Size(181, 77);
+            this.button26.Size = new System.Drawing.Size(89, 77);
             this.button26.TabIndex = 28;
             this.button26.Text = "CE";
             this.button26.UseVisualStyleBackColor = true;
@@ -482,9 +486,9 @@
             // 
             // button27
             // 
-            this.button27.Location = new System.Drawing.Point(582, 300);
+            this.button27.Location = new System.Drawing.Point(677, 300);
             this.button27.Name = "button27";
-            this.button27.Size = new System.Drawing.Size(184, 77);
+            this.button27.Size = new System.Drawing.Size(89, 77);
             this.button27.TabIndex = 29;
             this.button27.Text = "C";
             this.button27.UseVisualStyleBackColor = true;
