@@ -449,7 +449,7 @@ namespace TRPO_lab2
 
         private void button26_Click(object sender, EventArgs e)
         {   
-            label2.Text= control.SetStartStateOfCalculator();
+            label2.Text= control.DoCommandOfEditor(TEditor.CommandOfEditor.Clear);
         }
 
         private void button23_Click(object sender, EventArgs e)
@@ -476,7 +476,7 @@ namespace TRPO_lab2
 
         private void button27_Click(object sender, EventArgs e)
         {
-            label2.Text = control.DoCommandOfEditor(TEditor.CommandOfEditor.Clear);
+            label2.Text = control.SetStartStateOfCalculator();
         }
 
         private void button12_Click(object sender, EventArgs e)

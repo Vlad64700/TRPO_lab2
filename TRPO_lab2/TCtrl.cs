@@ -15,6 +15,7 @@ namespace TRPO_lab2
         CtrlState State; // состояние
 
         bool isLastClickEnter = false; // флаг, устанавливающий, была ли нажата клавиша = в последнйи раз
+        bool isLastClickOperation = false; //флаг, устонавливающий была ли нажата клавиша операции в последний раз
 
         // основание системы сч. числа и точность
         public int BaseNumber = 10;
@@ -57,6 +58,7 @@ namespace TRPO_lab2
 
         public void DoCommandOfCalculator(CommandOfCalculator command) 
         {
+            isLastClickOperation = false;
             switch (command) 
             {
                 case CommandOfCalculator.MC:
@@ -81,24 +83,32 @@ namespace TRPO_lab2
 
         public string DoCommandOfEditor (TEditor.CommandOfEditor command, char ch='0')
         {
+            isLastClickOperation = false;
             switch (command)
             {
                 case TEditor.CommandOfEditor.AddDigit:
+                    if (isLastClickEnter == true)
+                        Editor.Clear();
                     Editor.AddDigit(ch);
+                    isLastClickEnter = false;
                     break;
                 case TEditor.CommandOfEditor.Backspace:
-                    Editor.Bs();
+                    if (isLastClickEnter == false)
+                        Editor.Bs();
                     break;
                 case TEditor.CommandOfEditor.Clear:
+                    isLastClickEnter = false;
                     Editor.Clear();
                     break;
             }
+
             return Editor.Number;
         }
 
         public string DoOperation(TProc.State command)
         {
             isLastClickEnter = false;
+            isLastClickOperation = true; // у нас последее нажатие - нажатие клаивиши операции
             //получаем число и записываем в левый операнд
             var number = new TPNumber(Editor.Number, BaseNumber, AccuracyNumber);
             Proc.SetLeftOperand(number);
@@ -110,6 +120,7 @@ namespace TRPO_lab2
         public string DoFunction(TProc.State command)
         {
             isLastClickEnter = false;
+            isLastClickOperation = false;
             //получаем число и записываем в левый операнд
             var number = new TPNumber(Editor.Number, BaseNumber, AccuracyNumber);
             Proc.SetRightOperand(number);
@@ -118,11 +129,23 @@ namespace TRPO_lab2
             Proc.DoFunction();
 
             Editor.Number = Proc.GetRightOperand().GetNumberString();
+           
             return Editor.Number;
         }
 
         public string CalculateExpression() 
         {
+            if (isLastClickOperation == true)
+            {
+                if (Proc.GetRightOperand().GetNumberString()=="0")
+                    Proc.SetRightOperand(Proc.GetLeftOperand());
+                Proc.DoOperation();
+                Editor.Number = Proc.GetLeftOperand().GetNumberString();
+                isLastClickEnter = true;
+
+                return Editor.Number;
+            }
+
             if (isLastClickEnter==true)
             {
                 Proc.DoOperation();
@@ -136,13 +159,15 @@ namespace TRPO_lab2
             var number = new TPNumber(Editor.Number, BaseNumber, AccuracyNumber);
             Proc.SetRightOperand(number);
 
+
             //выполняем операцию или функцию по факту выполнится один фиг что-то одно, но по методе надо именно так)))))
             Proc.DoOperation();
 
             Editor.Number = Proc.GetLeftOperand().GetNumberString();
-            
 
+            isLastClickOperation = false;
             return Editor.Number;
+            
         }
         public string ChangeSign()
         {
@@ -152,9 +177,10 @@ namespace TRPO_lab2
         
         public string SetStartStateOfCalculator()
         {
+            isLastClickOperation = false;
             isLastClickEnter = false;
             Editor.Clear();
-            Proc.SetOperation(TProc.State.None);
+            Proc.ResetProcessor();
             return Editor.Number;
         }
 
