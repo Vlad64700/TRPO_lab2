@@ -54,6 +54,7 @@ namespace TRPO_lab2
             Memory = new TMemory();
             Number = new TPNumber(0, BaseNumber);
             History = new List<string>();
+            History.Add("");
             State = CtrlState.Start;
             Editor.OnlyInteger = onlyInteger;
         }
@@ -82,6 +83,7 @@ namespace TRPO_lab2
                     Editor.Clear();
                     break;
                 case CommandOfCalculator.C:
+                    History[History.Count - 1] = "";
                     SetStartStateOfCalculator();
                     break;
             }
@@ -114,6 +116,7 @@ namespace TRPO_lab2
 
         public string DoOperation(TProc.State command)
         {
+
             countOfSwitchOperation++;
             isLastClickEnter = false;
             var number_temp = Editor.Number;
@@ -122,8 +125,12 @@ namespace TRPO_lab2
             {
                 Proc.SetRightOperand(new TPNumber(Editor.Number, BaseNumber, AccuracyNumber));
                 Proc.DoOperation();
+                //для истории
+                History[History.Count - 1] += Proc.GetRightOperand().GetNumberString();
                 Editor.Number = "0";
                 Proc.SetOperation(command);
+                //для истории
+                History[History.Count - 1] += Proc.GetState().ToString();
                 return Proc.GetLeftOperand().GetNumberString(); ;
             }
 
@@ -131,8 +138,13 @@ namespace TRPO_lab2
             //получаем число и записываем в левый операнд
             var number = new TPNumber(Editor.Number, BaseNumber, AccuracyNumber);
             Proc.SetLeftOperand(number);
+
+            //для истории
+            History[History.Count - 1] += Proc.GetLeftOperand().GetNumberString();
             //устанавливем операцию
             Proc.SetOperation(command);
+            //для истории
+            History[History.Count - 1] += Proc.GetState().ToString();
             Editor.Clear();
             isLastClickOperation = true; // у нас последее нажатие - нажатие клаивиши операции
             return number_temp;
@@ -147,6 +159,10 @@ namespace TRPO_lab2
             //устанавливем операцию
             var temp_state = Proc.GetState();
             Proc.SetOperation(command);
+            //для истории
+            History[History.Count - 1] += Proc.GetRightOperand().GetNumberString();
+            //для истории
+            History[History.Count - 1] += Proc.GetState().ToString();
             Proc.DoFunction();
             Proc.SetOperation(temp_state);
 
@@ -186,6 +202,11 @@ namespace TRPO_lab2
             //выполняем операцию или функцию по факту выполнится один фиг что-то одно, но по методе надо именно так)))))
             Proc.DoOperation();
 
+            //для истории
+            History[History.Count - 1] += Proc.GetRightOperand().GetNumberString();
+            History[History.Count - 1] += "="+Proc.GetLeftOperand().GetNumberString();
+            History.Add("");
+
             Editor.Number = Proc.GetLeftOperand().GetNumberString();
 
             isLastClickOperation = false;
@@ -200,12 +221,27 @@ namespace TRPO_lab2
         
         public string SetStartStateOfCalculator()
         {
+            History[History.Count - 1] = "";
             countOfSwitchOperation = 0;
             isLastClickOperation = false;
             isLastClickEnter = false;
             Editor.Clear();
             Proc.ResetProcessor();
             return Editor.Number;
+        }
+
+        public List<string> GetHistory() 
+        {
+            for (int i=0; i<History.Count; i++)
+            {
+                History[i] = History[i].Replace("Add", "+");
+                History[i] = History[i].Replace("Sud", "-");
+                History[i] = History[i].Replace("Dvd", "/");
+                History[i] = History[i].Replace("Mul", "X");
+                History[i] = History[i].Replace("Rev", "(^-1)");
+                History[i] = History[i].Replace("Sqr", "(^2)");
+            }
+            return History;
         }
 
     }

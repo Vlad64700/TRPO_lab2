@@ -13,7 +13,7 @@ namespace TRPO_lab2
 {
     public partial class Form1 : Form
     {
-        TCtrl control = new TCtrl();
+        public TCtrl control = new TCtrl();
         public Form1()
         {
             InitializeComponent();
@@ -687,6 +687,17 @@ namespace TRPO_lab2
         private void button4_Click(object sender, EventArgs e)
         {
             button24.Text = control.DoCommandOfCalculator(TCtrl.CommandOfCalculator.M_Plus);
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var HistoryForm = new HistoryForm(this);
+            HistoryForm.Show();
+        }
+
+        private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
