@@ -462,6 +462,7 @@
             this.button24.Name = "button24";
             this.button24.Size = new System.Drawing.Size(279, 77);
             this.button24.TabIndex = 26;
+            this.button24.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button24.UseVisualStyleBackColor = false;
             // 
             // button25

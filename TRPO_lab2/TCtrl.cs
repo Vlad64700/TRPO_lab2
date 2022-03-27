@@ -67,8 +67,7 @@ namespace TRPO_lab2
                     Memory.Clear();
                     break;
                 case CommandOfCalculator.MR:
-                    var num = Memory.Take();
-                    Editor.Number = num.GetNumberString();
+                    Editor.Number = Memory.Take().GetNumberString();
                     break;
                 case CommandOfCalculator.MS:
                     Memory.Write(new TPNumber(Editor.Number, BaseNumber));
@@ -86,7 +85,7 @@ namespace TRPO_lab2
                     SetStartStateOfCalculator();
                     break;
             }
-            return Editor.Number;
+            return Memory.Take().GetNumberString();
         }
 
         public string DoCommandOfEditor (TEditor.CommandOfEditor command, char ch='0')

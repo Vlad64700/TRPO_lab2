@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace TRPO_lab2
 {
@@ -23,6 +24,7 @@ namespace TRPO_lab2
             control.DoCommandOfCalculator(TCtrl.CommandOfCalculator.MC);
             button1.Enabled = false;
             button2.Enabled = false;
+            button24.Text = "";
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -635,7 +637,20 @@ namespace TRPO_lab2
 
         private void вставитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            label2.Text=Clipboard.GetText();
+            try
+            {
+                var str = Clipboard.GetText();
+                control.DoCommandOfEditor(TEditor.CommandOfEditor.Clear);
+                foreach (var item in str)
+                {
+                    label2.Text=control.DoCommandOfEditor(TEditor.CommandOfEditor.AddDigit, item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Данные не соотвествуят числу");
+            }
+  
         }
 
         private void справкаToolStripMenuItem_Click(object sender, EventArgs e)
@@ -664,14 +679,14 @@ namespace TRPO_lab2
 
         private void button3_Click(object sender, EventArgs e)
         {
-            control.DoCommandOfCalculator(TCtrl.CommandOfCalculator.MS);
             button1.Enabled = true;
             button2.Enabled = true;
+            button24.Text= control.DoCommandOfCalculator(TCtrl.CommandOfCalculator.MS);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            control.DoCommandOfCalculator(TCtrl.CommandOfCalculator.M_Plus);
+            button24.Text = control.DoCommandOfCalculator(TCtrl.CommandOfCalculator.M_Plus);
         }
     }
 }
