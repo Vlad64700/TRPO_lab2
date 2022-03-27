@@ -16,6 +16,7 @@ namespace TRPO_lab2
 
         bool isLastClickEnter = false; // флаг, устанавливающий, была ли нажата клавиша = в последнйи раз
         bool isLastClickOperation = false; //флаг, устонавливающий была ли нажата клавиша операции в последний раз
+        int countOfSwitchOperation = 0;
 
         // основание системы сч. числа и точность
         public int BaseNumber = 10;
@@ -45,7 +46,7 @@ namespace TRPO_lab2
         private List<string> History;
 
         //конструктор, в нем иницилизируется все значения
-        public TCtrl(int BaseNumber=10) 
+        public TCtrl(int BaseNumber=10, bool onlyInteger=false) 
         {
             this.BaseNumber = BaseNumber;
             Editor = new TEditor();
@@ -54,6 +55,7 @@ namespace TRPO_lab2
             Number = new TPNumber(0, BaseNumber);
             History = new List<string>();
             State = CtrlState.Start;
+            Editor.OnlyInteger = onlyInteger;
         }
 
         public void DoCommandOfCalculator(CommandOfCalculator command) 
@@ -73,16 +75,17 @@ namespace TRPO_lab2
                     DoCommandOfEditor(TEditor.CommandOfEditor.Backspace);
                     break;
                 case CommandOfCalculator.CE:
-                    SetStartStateOfCalculator();
+                    Editor.Clear();
                     break;
                 case CommandOfCalculator.C:
-                    Editor.Clear();
+                    SetStartStateOfCalculator();
                     break;
             }
         }
 
         public string DoCommandOfEditor (TEditor.CommandOfEditor command, char ch='0')
         {
+
             isLastClickOperation = false;
             switch (command)
             {
@@ -107,21 +110,33 @@ namespace TRPO_lab2
 
         public string DoOperation(TProc.State command)
         {
+            countOfSwitchOperation++;
             isLastClickEnter = false;
-            isLastClickOperation = true; // у нас последее нажатие - нажатие клаивиши операции
+            var number_temp = Editor.Number;
+
+            if (countOfSwitchOperation>1)
+            {
+                Proc.SetRightOperand(new TPNumber(Editor.Number, BaseNumber, AccuracyNumber));
+                Proc.DoOperation();
+                Editor.Number = "0";
+                return Proc.GetLeftOperand().GetNumberString(); ;
+            }
+
+
             //получаем число и записываем в левый операнд
             var number = new TPNumber(Editor.Number, BaseNumber, AccuracyNumber);
             Proc.SetLeftOperand(number);
             //устанавливем операцию
             Proc.SetOperation(command);
             Editor.Clear();
-            return Editor.Number;
+            isLastClickOperation = true; // у нас последее нажатие - нажатие клаивиши операции
+            return number_temp;
         }
         public string DoFunction(TProc.State command)
         {
             isLastClickEnter = false;
             isLastClickOperation = false;
-            //получаем число и записываем в левый операнд
+            //получаем число и записываем в правый операнд
             var number = new TPNumber(Editor.Number, BaseNumber, AccuracyNumber);
             Proc.SetRightOperand(number);
             //устанавливем операцию
@@ -135,9 +150,10 @@ namespace TRPO_lab2
 
         public string CalculateExpression() 
         {
+            countOfSwitchOperation = 0;
             if (isLastClickOperation == true)
             {
-                if (Proc.GetRightOperand().GetNumberString()=="0")
+                if (isLastClickEnter == false)
                     Proc.SetRightOperand(Proc.GetLeftOperand());
                 Proc.DoOperation();
                 Editor.Number = Proc.GetLeftOperand().GetNumberString();
@@ -177,6 +193,7 @@ namespace TRPO_lab2
         
         public string SetStartStateOfCalculator()
         {
+            countOfSwitchOperation = 0;
             isLastClickOperation = false;
             isLastClickEnter = false;
             Editor.Clear();

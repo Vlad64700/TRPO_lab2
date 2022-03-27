@@ -35,7 +35,7 @@ namespace TRPO_lab2
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            control = new TCtrl(trackBar1.Value);
+            control = new TCtrl(trackBar1.Value, целыеЧислаToolStripMenuItem.Checked);
             label2.Text ="0";
             label1.Text = $"Основание: {trackBar1.Value}";
             var baseNumber = trackBar1.Value;
@@ -299,22 +299,22 @@ namespace TRPO_lab2
 
         private void button20_Click(object sender, EventArgs e)
         {
-            control.DoOperation(TProc.State.Add);
+            label2.Text=control.DoOperation(TProc.State.Add);
         }
 
         private void button19_Click(object sender, EventArgs e)
         {
-            control.DoOperation(TProc.State.Sub);
+            label2.Text = control.DoOperation(TProc.State.Sub);
         }
 
         private void button18_Click(object sender, EventArgs e)
         {
-            control.DoOperation(TProc.State.Mul);
+            label2.Text = control.DoOperation(TProc.State.Mul);
         }
 
         private void button17_Click(object sender, EventArgs e)
         {
-            control.DoOperation(TProc.State.Dvd);
+            label2.Text = control.DoOperation(TProc.State.Dvd);
         }
 
         private void button21_Click(object sender, EventArgs e)
@@ -624,6 +624,40 @@ namespace TRPO_lab2
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void копироватьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(label2.Text);
+        }
+
+        private void вставитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            label2.Text=Clipboard.GetText();
+        }
+
+        private void справкаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new AboutStudents();
+            form.Show();
+        }
+
+        private void целыеЧислаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            вещественныеЧислаToolStripMenuItem.Checked = false;
+            целыеЧислаToolStripMenuItem.Checked= true;
+            control = new TCtrl(trackBar1.Value, целыеЧислаToolStripMenuItem.Checked);
+            label2.Text = "0";
+        }
+
+        private void вещественныеЧислаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            вещественныеЧислаToolStripMenuItem.Checked = true;
+            целыеЧислаToolStripMenuItem.Checked = false;
+            control = new TCtrl(trackBar1.Value, целыеЧислаToolStripMenuItem.Checked);
+            label2.Text = "0";
+
+
         }
     }
 }

@@ -23,6 +23,8 @@ namespace TRPO_lab2
             Clear // отчистка всего редактора
         }
 
+        public bool OnlyInteger { get; set; }
+
         //Свойствое для редактируемого числа.
         public string Number
         {
@@ -46,36 +48,65 @@ namespace TRPO_lab2
         //Добавить символ.
         public string AddDigit(char ch)
         {
-            //если добавляем минус
-            if (ch == 45)
+            if (!OnlyInteger)
             {
-                AddMinus();
-                return number;
-            }
+                //если добавляем минус
+                if (ch == 45)
+                {
+                    AddMinus();
+                    return number;
+                }
 
-            //если добавляем разделитель
-            if (ch == 46 || ch == 44 || ch == 198 || ch == 190 || ch == 191 || ch == 188)
-            {
-                AddDelim();
-                return number;
-            }
+                //если добавляем разделитель
+                if (ch == 46 || ch == 44 || ch == 198 || ch == 190 || ch == 191 || ch == 188)
+                {
+                    AddDelim();
+                    return number;
+                }
 
-            //если добавляем ноль
-            if (ch == 48)
-            {
-                AddZero();
-                return number;
-            }
+                //если добавляем ноль
+                if (ch == 48)
+                {
+                    AddZero();
+                    return number;
+                }
 
-            //если добавляем 0-9 A-F
-            if ((ch >= 48 && ch <= 57) || (ch >= 65 && ch <= 70))
-            {
-                if (number == "0") number = ch.ToString();
-                else number += ch;
-                return number;
+                //если добавляем 0-9 A-F
+                if ((ch >= 48 && ch <= 57) || (ch >= 65 && ch <= 70))
+                {
+                    if (number == "0") number = ch.ToString();
+                    else number += ch;
+                    return number;
+                }
+                else
+                    throw new Exception("Недопустимый символ для добавления");
             }
             else
-                throw new Exception("Недопустимый символ для добавления");
+            {
+
+                if (ch == 45)
+                {
+                    AddMinus();
+                    return number;
+                }
+
+                //если добавляем ноль
+                if (ch == 48)
+                {
+                    AddZero();
+                    return number;
+                }
+
+                //если добавляем 0-9 A-F
+                if ((ch >= 48 && ch <= 57) || (ch >= 65 && ch <= 70))
+                {
+                    if (number == "0") number = ch.ToString();
+                    else number += ch;
+                    return number;
+                }
+                else
+                    throw new Exception("Недопустимый символ для добавления");
+            }
 
         }
 

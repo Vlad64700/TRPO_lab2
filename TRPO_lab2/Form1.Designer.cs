@@ -34,6 +34,9 @@
             this.вставитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.режимToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.целыеЧислаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.вещественныеЧислаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -107,12 +110,14 @@
             this.копироватьToolStripMenuItem.Name = "копироватьToolStripMenuItem";
             this.копироватьToolStripMenuItem.Size = new System.Drawing.Size(278, 44);
             this.копироватьToolStripMenuItem.Text = "Копировать";
+            this.копироватьToolStripMenuItem.Click += new System.EventHandler(this.копироватьToolStripMenuItem_Click);
             // 
             // вставитьToolStripMenuItem
             // 
             this.вставитьToolStripMenuItem.Name = "вставитьToolStripMenuItem";
             this.вставитьToolStripMenuItem.Size = new System.Drawing.Size(278, 44);
             this.вставитьToolStripMenuItem.Text = "Вставить";
+            this.вставитьToolStripMenuItem.Click += new System.EventHandler(this.вставитьToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -122,15 +127,43 @@
             // 
             // настройкиToolStripMenuItem
             // 
+            this.настройкиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.режимToolStripMenuItem});
             this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
             this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(152, 36);
             this.настройкиToolStripMenuItem.Text = "Настройки";
+            // 
+            // режимToolStripMenuItem
+            // 
+            this.режимToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.целыеЧислаToolStripMenuItem,
+            this.вещественныеЧислаToolStripMenuItem});
+            this.режимToolStripMenuItem.Name = "режимToolStripMenuItem";
+            this.режимToolStripMenuItem.Size = new System.Drawing.Size(359, 44);
+            this.режимToolStripMenuItem.Text = "Режим ";
+            // 
+            // целыеЧислаToolStripMenuItem
+            // 
+            this.целыеЧислаToolStripMenuItem.Name = "целыеЧислаToolStripMenuItem";
+            this.целыеЧислаToolStripMenuItem.Size = new System.Drawing.Size(383, 44);
+            this.целыеЧислаToolStripMenuItem.Text = "Целые числа";
+            this.целыеЧислаToolStripMenuItem.Click += new System.EventHandler(this.целыеЧислаToolStripMenuItem_Click);
+            // 
+            // вещественныеЧислаToolStripMenuItem
+            // 
+            this.вещественныеЧислаToolStripMenuItem.Checked = true;
+            this.вещественныеЧислаToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.вещественныеЧислаToolStripMenuItem.Name = "вещественныеЧислаToolStripMenuItem";
+            this.вещественныеЧислаToolStripMenuItem.Size = new System.Drawing.Size(383, 44);
+            this.вещественныеЧислаToolStripMenuItem.Text = "Вещественные числа";
+            this.вещественныеЧислаToolStripMenuItem.Click += new System.EventHandler(this.вещественныеЧислаToolStripMenuItem_Click);
             // 
             // справкаToolStripMenuItem
             // 
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
             this.справкаToolStripMenuItem.Size = new System.Drawing.Size(126, 36);
             this.справкаToolStripMenuItem.Text = "Справка";
+            this.справкаToolStripMenuItem.Click += new System.EventHandler(this.справкаToolStripMenuItem_Click);
             // 
             // panel1
             // 
@@ -636,5 +669,8 @@
         private System.Windows.Forms.Button button31;
         private System.Windows.Forms.Button button32;
         private System.Windows.Forms.Button button33;
+        private System.Windows.Forms.ToolStripMenuItem режимToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem целыеЧислаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem вещественныеЧислаToolStripMenuItem;
     }
 }
