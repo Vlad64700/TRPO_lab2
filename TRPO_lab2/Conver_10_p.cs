@@ -11,10 +11,17 @@ namespace TRPO_lab2
                 throw new Exception("Выход за допустимый диапазон систем счисления");
 
             string number_10 = Convert.ToString(n);
+
+            string minus = "";
+            if (number_10.IndexOf("-") != -1)
+            {
+                minus = "-";
+                number_10 = number_10.Replace("-", "");
+            }
             string integet_part = int_to_P(number_10, p);
             string fraction_part = flt_to_P(number_10, p, c);
 
-            return integet_part + "." + fraction_part;
+            return minus+integet_part + "." + fraction_part;
         }
 
         //преобразование целой части числа в нужную СС, разделитель - запятая.

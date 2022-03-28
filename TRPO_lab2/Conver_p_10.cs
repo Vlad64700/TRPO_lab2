@@ -51,7 +51,7 @@ namespace TRPO_lab2
         public static double dval(string P_num, int P)
         {
             //длина целой части числа
-            int integerPartLength = P_num.IndexOf('.');
+            int integerPartLength = P_num.IndexOf(',');
             //если число не содержит '.' => оно полностью целое
             if (integerPartLength == -1) integerPartLength = P_num.Length;
             return convert(P_num, P, integerPartLength);

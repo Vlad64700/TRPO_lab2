@@ -136,7 +136,7 @@ namespace TRPO_lab2
 
 
             //получаем число и записываем в левый операнд
-            var number = new TPNumber(Editor.Number, BaseNumber, AccuracyNumber);
+            var number = new TPNumber(Editor.Number, this.BaseNumber, AccuracyNumber);
             Proc.SetLeftOperand(number);
 
             //для истории

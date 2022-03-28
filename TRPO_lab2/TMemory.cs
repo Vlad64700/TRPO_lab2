@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace TRPO_lab2
 {
-    enum State
-    {
-        _Off,
-        _On
-    };
+    
     class TMemory
     {
         //число, хранящееся в памяти
@@ -18,6 +14,12 @@ namespace TRPO_lab2
 
         //состояние памяти
         private State _fState;
+
+        enum State
+        {
+            _Off,
+            _On
+        };
 
         public TMemory()
         {
