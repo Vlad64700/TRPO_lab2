@@ -10,6 +10,7 @@ namespace TRPO_lab2
     {
         TEditor Editor; //Редактор
         TProc Proc; // процессор
+        TProc Proc_temp; //вспомогательный процессор
         TMemory Memory; // память
         TPNumber Number; // число
         CtrlState State; // состояние
@@ -51,6 +52,7 @@ namespace TRPO_lab2
             this.BaseNumber = BaseNumber;
             Editor = new TEditor();
             Proc = new TProc();
+            Proc_temp = new TProc();
             Memory = new TMemory();
             Number = new TPNumber(0, BaseNumber);
             History = new List<string>();
@@ -123,15 +125,34 @@ namespace TRPO_lab2
 
             if (countOfSwitchOperation>1)
             {
-                Proc.SetRightOperand(new TPNumber(Editor.Number, BaseNumber, AccuracyNumber));
-                Proc.DoOperation();
-                //для истории
-                History[History.Count - 1] += Proc.GetRightOperand().GetNumberString();
-                Editor.Number = "0";
-                Proc.SetOperation(command);
-                //для истории
-                History[History.Count - 1] += Proc.GetState().ToString();
-                return Proc.GetLeftOperand().GetNumberString(); ;
+                if (Proc_temp.isActive == true)
+                {
+                    Proc_temp.SetRightOperand(new TPNumber(Editor.Number, BaseNumber, AccuracyNumber));
+                    Proc_temp.DoOperation();
+                    Editor.Number = Proc_temp.GetLeftOperand().GetNumberString();
+                    Proc_temp.isActive = false;
+                }
+
+                if (command == TProc.State.Add || command == TProc.State.Sub)
+                {
+                    Proc.SetRightOperand(new TPNumber(Editor.Number, BaseNumber, AccuracyNumber));
+                    Proc.DoOperation();
+                    //для истории
+                    History[History.Count - 1] += Proc.GetRightOperand().GetNumberString();
+                    Editor.Number = "0";
+                    Proc.SetOperation(command);
+                    //для истории
+                    History[History.Count - 1] += Proc.GetState().ToString();
+                    return Proc.GetLeftOperand().GetNumberString();
+                }
+                else
+                {
+                    Proc_temp.SetLeftOperand(new TPNumber(Editor.Number, BaseNumber, AccuracyNumber));
+                    Proc_temp.SetOperation(command);
+                    Proc_temp.isActive = true;
+                    Editor.Number = "0";
+                    return number_temp;
+                }
             }
 
 
@@ -174,6 +195,17 @@ namespace TRPO_lab2
         public string CalculateExpression() 
         {
             countOfSwitchOperation = 0;
+            //если выполняется выше по приоритету операция
+            if (Proc_temp.isActive == true)
+            {
+                if (Editor.Number == "0")
+                    Editor.Number = Proc_temp.GetLeftOperand().GetNumberString();
+                Proc_temp.SetRightOperand(new TPNumber(Editor.Number, BaseNumber, AccuracyNumber));
+                Proc_temp.DoOperation();
+                Editor.Number = Proc_temp.GetLeftOperand().GetNumberString();
+                Proc_temp.isActive = false;
+            }
+
             if (isLastClickOperation == true)
             {
                 if (isLastClickEnter == false)
@@ -225,8 +257,10 @@ namespace TRPO_lab2
             countOfSwitchOperation = 0;
             isLastClickOperation = false;
             isLastClickEnter = false;
+            Proc_temp.isActive = false;
             Editor.Clear();
             Proc.ResetProcessor();
+            Proc_temp.ResetProcessor();
             return Editor.Number;
         }
 

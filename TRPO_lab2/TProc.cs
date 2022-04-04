@@ -12,6 +12,7 @@ namespace TRPO_lab2
         public TPNumber Lop_Res; // левый операнд
         public TPNumber Rop; // правый операнд
         public State Operation; // операция которая будет выолняться
+        public bool isActive=false;//кое-что для одноно костыля, для приоритета
         public enum State { None, Add, Sub, Mul, Dvd, Rev, Sqr }
         // конструктор, иницилизирует значениями по-умолчанию
         public TProc() 
